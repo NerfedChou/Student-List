@@ -1,0 +1,103 @@
+/* Reset & Basic */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(238, 235, 235);
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Heading */
+.icon {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Card Style for Form */
+.form-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Button Group */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn.add {
+    background-color: #28a745;
+    color: white;
+}
+.btn.update {
+    background-color: #ffc107;
+    color: black;
+}
+.btn.delete {
+    background-color: #dc3545;
+    color: white;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+thead {
+    background-color: #007bff;
+    color: white;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tbody tr:hover {
+    background-color: #e8f0fe;
+}
