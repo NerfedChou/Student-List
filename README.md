@@ -1,0 +1,2 @@
+# Student-List
+Creating this project to help teachers or anyone to make listing efficient, but I'm still a beginner so I did this in the help of AI tools, because I believe in the saying that work smarter not harder hahaha cheers.
