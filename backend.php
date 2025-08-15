@@ -47,6 +47,24 @@ class StudentList
     }
 }
 
+// PHP
+function handleAction($studentList, $method, $fields, $successMsg, $errorMsg)
+{
+    $data = json_decode(file_get_contents('php://input'), true);
+    foreach ($fields as $field) {
+        if (!isset($data[$field]) || empty($data[$field])) {
+            echo json_encode(['success' => false, 'message' => "Missing field: $field"]);
+            exit;
+        }
+    }
+    if (call_user_func_array([$studentList, $method], array_map(fn($f) => $data[$f], $fields))) {
+        echo json_encode(['success' => true, 'message' => $successMsg]);
+    } else {
+        echo json_encode(['success' => false, 'message' => $errorMsg]);
+    }
+    exit;
+}
+
 // Database connection
 $conn = mysqli_connect("localhost", "root", "", "jan");
 if (!$conn) {
@@ -58,33 +76,13 @@ $studentList = new StudentList($conn);
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action === 'addStudent') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if ($studentList->addStudent($data['firstName'], $data['lastName'], $data['course'])) {
-        echo json_encode(['success' => true, 'message' => "Student added successfully"]);
-    } else {
-        echo json_encode(['success' => false, 'message' => "Error adding student"]);
-    }
-    exit;
+    handleAction($studentList, 'addStudent', ['firstName', 'lastName', 'course'], "Student added successfully", "Error adding student");
 }
-
 if ($action === 'updateStudent') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if ($studentList->updateStudent($data['id'], $data['firstName'], $data['lastName'], $data['course'])) {
-        echo json_encode(['success' => true, 'message' => "Student updated successfully"]);
-    } else {
-        echo json_encode(['success' => false, 'message' => "Error updating student"]);
-    }
-    exit;
+    handleAction($studentList, 'updateStudent', ['id', 'firstName', 'lastName', 'course'], "Student updated successfully", "Error updating student");
 }
-
 if ($action === 'deleteStudent') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if ($studentList->deleteStudent($data['id'])) {
-        echo json_encode(['success' => true, 'message' => "Student deleted successfully"]);
-    } else {
-        echo json_encode(['success' => false, 'message' => "Error deleting student"]);
-    }
-    exit;
+    handleAction($studentList, 'deleteStudent', ['id'], "Student deleted successfully", "Error deleting student");
 }
 
 if ($action === 'loadStudents') {
