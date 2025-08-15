@@ -20,14 +20,22 @@ function addStudent() {
     let lastName = document.getElementById("lastName").value.trim();
     let course = document.getElementById("course").value.trim();
 
-    if (!firstName || !lastName || !course) {
-        alert("Please fill in all fields");
-        return;
-    }
-
-    students.push({ firstName, lastName, course });
-    clearForm();
-    renderTable();
+    fetch("backend.php?action=addStudent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, course })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            loadStudents(() => {
+                renderTable();
+                clearForm();
+            });
+        } else {
+            alert("Error adding student");
+        }
+    });
 }
 
 function selectRow(index) {
@@ -44,13 +52,27 @@ function updateStudent() {
         return;
     }
 
-    students[selectedIndex].firstName = document.getElementById("firstName").value.trim();
-    students[selectedIndex].lastName = document.getElementById("lastName").value.trim();
-    students[selectedIndex].course = document.getElementById("course").value.trim();
+    let firstName = document.getElementById("firstName").value.trim();
+    let lastName = document.getElementById("lastName").value.trim();
+    let course = document.getElementById("course").value.trim();
 
-    clearForm();
-    renderTable();
-    selectedIndex = -1;
+    fetch("backend.php?action=updateStudent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: students[selectedIndex].id, firstName, lastName, course })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            loadStudents(() => {
+                renderTable();
+                clearForm();
+                selectedIndex = -1;
+            });
+        } else {
+            alert("Error updating student");
+        }
+    });
 }
 
 function deleteStudent() {
@@ -58,10 +80,24 @@ function deleteStudent() {
         alert("Please select a student to delete");
         return;
     }
-    students.splice(selectedIndex, 1);
-    clearForm();
-    renderTable();
-    selectedIndex = -1;
+
+    fetch("backend.php?action=deleteStudent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: students[selectedIndex].id })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            loadStudents(() => {
+                renderTable();
+                clearForm();
+                selectedIndex = -1;
+            });
+        } else {
+            alert("Error deleting student");
+        }
+    });
 }
 
 function clearForm() {
@@ -69,3 +105,16 @@ function clearForm() {
     document.getElementById("lastName").value = "";
     document.getElementById("course").value = "";
 }
+
+function loadStudents(callback) {
+    fetch("backend.php?action=loadStudents")
+        .then(response => response.json())
+        .then(data => {
+            students = data;
+            if (callback) callback();
+        });
+}
+
+window.onload = function() {
+    loadStudents(renderTable);
+};
