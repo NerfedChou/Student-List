@@ -1,5 +1,4 @@
 <?php
-
 class StudentList
 {
     private $conn;
@@ -47,17 +46,21 @@ class StudentList
     }
 }
 
-// PHP
 function handleAction($studentList, $method, $fields, $successMsg, $errorMsg)
 {
     $data = json_decode(file_get_contents('php://input'), true);
     foreach ($fields as $field) {
-        if (!isset($data[$field]) || empty($data[$field])) {
+        if (empty($data[$field])) {
             echo json_encode(['success' => false, 'message' => "Missing field: $field"]);
             exit;
         }
     }
-    if (call_user_func_array([$studentList, $method], array_map(fn($f) => $data[$f], $fields))) {
+    if (call_user_func_array(
+        [$studentList, $method],
+        array_map(function ($f) use ($data) {
+            return $data[$f];
+        }, $fields)
+    )) {
         echo json_encode(['success' => true, 'message' => $successMsg]);
     } else {
         echo json_encode(['success' => false, 'message' => $errorMsg]);
