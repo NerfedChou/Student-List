@@ -1,5 +1,8 @@
 <?php
 //oten connection
+//otena imo xaamp dayun ilisi ang jan ug database nimo then create kag table nga studentlist all small na sya
+//make sure nga ang table sa studentlist is First Name, Last Name, Course dapat word by word accurate ni sya
+//ofcourse dont forget the id which is auto increment you need 4 slots. basta kabalo naka ana
 $conn = mysqli_connect("localhost", "root", "", "jan");
 
 if (!$conn) {
@@ -82,3 +85,4 @@ if ($action === 'loadStudents') {
     echo json_encode($students);
     exit;
 }
+//oten
