@@ -17,7 +17,7 @@ if ($action === 'addStudent') {
     $lastName = isset($data['lastName']) ? $data['lastName'] : '';
     $course = isset($data['course']) ? $data['course'] : '';
 
-    if(!$firstName || !$lastName || !$course){
+    if (!$firstName || !$lastName || !$course) {
         echo json_encode(['success' => false, 'message' => "All fields are required"]);
         exit;
     }
@@ -40,7 +40,7 @@ if ($action === 'updateStudent') {
     $lastName = isset($data['lastName']) ? $data['lastName'] : '';
     $course = isset($data['course']) ? $data['course'] : '';
 
-    if(!$id || !$firstName || !$lastName || !$course){
+    if (!$id || !$firstName || !$lastName || !$course) {
         echo json_encode(['success' => false, 'message' => "All fields are required"]);
         exit;
     }
@@ -60,7 +60,7 @@ if ($action === 'deleteStudent') {
     $data = json_decode(file_get_contents('php://input'), true);
     $id = isset($data['id']) ? intval($data['id']) : 0;
 
-    if(!$id){
+    if (!$id) {
         echo json_encode(['success' => false, 'message' => "All fields are required"]);
         exit;
     }
