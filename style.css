@@ -9,6 +9,9 @@ body {
     background-color: rgb(238, 235, 235);
     padding: 20px;
 }
+h1 {
+    cursor: default;
+}
 
 /* Container */
 .container {
@@ -63,15 +66,34 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-.btn.add {
+#search {
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    margin: 6px auto;
+}
+#search input {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+
+}
+
+#searchInput::placeholder {
+    font-weight: bold;
+    text-align: center;
+}
+/* Improves Targeting of Buttons */
+#add {
     background-color: #28a745;
     color: white;
 }
-.btn.update {
+#update {
     background-color: #ffc107;
     color: black;
 }
-.btn.delete {
+#delete {
     background-color: #dc3545;
     color: white;
 }
@@ -93,7 +115,13 @@ thead {
     color: white;
     cursor: default;
 }
-th, td {
+th{
+    padding: 12px;
+    text-align: center;
+    border-left: 1px solid #ddd;
+}
+td {
+    border-left: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
