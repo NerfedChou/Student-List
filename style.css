@@ -75,14 +75,17 @@ h1 {
 }
 #search input {
     border-radius: 8px;
+    width: 100%;
     border: 1px solid #ccc;
-    padding: 10px;
-
+    padding: 10px 0 10px 30px;
+    background-image: url("images/svg/search.svg");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 15px;
 }
 
 #searchInput::placeholder {
     font-weight: bold;
-    text-align: center;
 }
 /* Improves Targeting of Buttons */
 #add {
