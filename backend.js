@@ -15,29 +15,6 @@ function renderTable() {
     });
 }
 
-function addStudent() {
-    let firstName = document.getElementById("firstName").value.trim();
-    let lastName = document.getElementById("lastName").value.trim();
-    let course = document.getElementById("course").value.trim();
-
-    fetch("backend.php?action=addStudent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, course })
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            loadStudents(() => {
-                renderTable();
-                clearForm();
-            });
-        } else {
-            alert("Error adding student");
-        }
-    });
-}
-
 function selectRow(index) {
     selectedIndex = index;
     let student = students[index];
@@ -46,32 +23,30 @@ function selectRow(index) {
     document.getElementById("course").value = student.course;
 }
 
+function clearForm() {
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("course").value = "";
+}
+
+function addStudent() {
+    let firstName = document.getElementById("firstName").value.trim();
+    let lastName = document.getElementById("lastName").value.trim();
+    let course = document.getElementById("course").value.trim();
+    fetchAction("addStudent", {firstName, lastName, course});
+}
+
 function updateStudent() {
     if (selectedIndex === -1) {
         alert("Please select a student to update");
         return;
     }
-
     let firstName = document.getElementById("firstName").value.trim();
     let lastName = document.getElementById("lastName").value.trim();
     let course = document.getElementById("course").value.trim();
-
-    fetch("backend.php?action=updateStudent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: students[selectedIndex].id, firstName, lastName, course })
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            loadStudents(() => {
-                renderTable();
-                clearForm();
-                selectedIndex = -1;
-            });
-        } else {
-            alert("Error updating student");
-        }
+    let id = students[selectedIndex].id;
+    fetchAction("updateStudent", {id, firstName, lastName, course}, () => {
+        selectedIndex = -1;
     });
 }
 
@@ -80,32 +55,11 @@ function deleteStudent() {
         alert("Please select a student to delete");
         return;
     }
-
-    fetch("backend.php?action=deleteStudent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: students[selectedIndex].id })
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            loadStudents(() => {
-                renderTable();
-                clearForm();
-                selectedIndex = -1;
-            });
-        } else {
-            alert("Error deleting student");
-        }
+    fetchAction("deleteStudent", {id: students[selectedIndex].id}, () => {
     });
 }
 
-function clearForm() {
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
-    document.getElementById("course").value = "";
-}
-
+// Ayaw ranig tanduga
 function loadStudents(callback) {
     fetch("backend.php?action=loadStudents")
         .then(response => response.json())
@@ -115,6 +69,28 @@ function loadStudents(callback) {
         });
 }
 
-window.onload = function() {
+function fetchAction(action, data, callback) {
+    fetch(`backend.php?action=${action}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                loadStudents(() => {
+                    renderTable();
+                    clearForm();
+                    if (callback) callback(result);
+                });
+            } else {
+                alert(result.message || "Error performing action");
+            }
+        });
+}
+
+window.onload = function () {
     loadStudents(renderTable);
 };
+
+//oten

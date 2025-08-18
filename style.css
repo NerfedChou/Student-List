@@ -9,6 +9,9 @@ body {
     background-color: rgb(238, 235, 235);
     padding: 20px;
 }
+h1 {
+    cursor: default;
+}
 
 /* Container */
 .container {
@@ -63,15 +66,37 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-.btn.add {
+#search {
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    margin: 6px auto;
+}
+#search input {
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 10px 0 10px 30px;
+    background-image: url("images/svg/search.svg");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 15px;
+}
+
+#searchInput::placeholder {
+    font-weight: bold;
+}
+/* Improves Targeting of Buttons */
+#add {
     background-color: #28a745;
     color: white;
 }
-.btn.update {
+#update {
     background-color: #ffc107;
     color: black;
 }
-.btn.delete {
+#delete {
     background-color: #dc3545;
     color: white;
 }
@@ -86,12 +111,20 @@ table {
     background: white;
     border-radius: 8px;
     overflow: hidden;
+    cursor: pointer;
 }
 thead {
     background-color: #007bff;
     color: white;
+    cursor: default;
 }
-th, td {
+th{
+    padding: 12px;
+    text-align: center;
+    border-left: 1px solid #ddd;
+}
+td {
+    border-left: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }

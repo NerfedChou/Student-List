@@ -31,15 +31,28 @@
                 <input type="text" id="course" placeholder="Enter course" required>
             </div>
 
-            <div class="btn-group">
-                <button type="button" class="btn add" onclick="addStudent()">➕ Add</button>
-                <button type="button" class="btn update" onclick="updateStudent()">✏ Update</button>
-                <button type="button" class="btn delete" onclick="deleteStudent()">🗑 Delete</button>
+            <div class="form-group">
+                <label for="section">Section</label>
+                <input type="text" id="section" placeholder="Enter section" required>
+            </div>
+
+            <!-- Gi usob nako ang css nimo imbes nga mag gama kag class gi target nalang nako using id (How to override values in css)-->
+            <div class="btn-group">         <!--Look at the id-->
+                <button type="button" class="btn" id="add"  onclick="addStudent()">➕ Add</button>
+                <button type="button" class="btn" id ="update" onclick="updateStudent()">✏ Update</button>
+                <button type="button" class="btn" id="delete" onclick="deleteStudent()">🗑 Delete</button>
             </div>
         </form>
     </div>
 
     <h2>Student Records</h2>
+    <div id = "search" class="form-card">
+        <input type="text" placeholder="First Name"/>
+        <input type="text" placeholder="Last Name"/>
+        <input type="text" placeholder="Course"/>
+        <input type="text" placeholder="Section"/>
+    </div>
+
     <table id="studentTable">
         <thead>
             <tr>
@@ -47,7 +60,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Course</th>
-                <th>Action</th>
+                <th>Section</th>
             </tr>
         </thead>
         <tbody>
@@ -58,3 +71,4 @@
 
 </body>
 </html>
+<!-- oten -->
