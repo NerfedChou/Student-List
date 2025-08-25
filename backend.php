@@ -92,3 +92,5 @@ if ($action === 'loadStudents') {
     echo json_encode($studentList->loadStudents());
     exit;
 }
+
+/* Default response for unknown action */
